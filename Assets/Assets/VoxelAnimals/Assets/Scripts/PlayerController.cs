@@ -9,13 +9,15 @@ public class PlayerController : MonoBehaviour
     public float jumpForce = 300;
     public float timeBeforeNextJump = 1.2f;
     private float canJump = 0f;
+    private Animator hop;
     Animator anim;
     Rigidbody rb;
-    
+
     void Start()
     {
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
+        hop = GameObject.FindGameObjectWithTag("Hop").GetComponent<Animator>();
     }
 
     void Update()
@@ -29,13 +31,15 @@ public class PlayerController : MonoBehaviour
         float moveVertical = Input.GetAxisRaw("Vertical");
 
         Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
+        
 
         if (movement != Vector3.zero)
         {
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(movement), 0.15f);
             anim.SetInteger("Walk", 1);
         }
-        else {
+        else
+        {
             anim.SetInteger("Walk", 0);
         }
 
@@ -43,9 +47,10 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetButtonDown("Jump") && Time.time > canJump)
         {
-                rb.AddForce(0, jumpForce, 0);
-                canJump = Time.time + timeBeforeNextJump;
-                anim.SetTrigger("jump");
+            
+            canJump = Time.time + timeBeforeNextJump;
+            hop.SetTrigger("hop");
+            anim.SetTrigger("jump");
         }
     }
 }
