@@ -10,6 +10,7 @@ public class playerMovament : MonoBehaviour
 
     private Animator animator;
     private bool isHopping;
+  
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -23,15 +24,13 @@ public class playerMovament : MonoBehaviour
             animator.SetTrigger("hop");
             isHopping = true;
             Debug.Log(transform.position);
-           
-             
-           
-        }
-        if (Input.GetKeyDown(KeyCode.Space) )
-        {
-            transform.Translate(0,0,1);
-        }
 
+            transform.position = (transform.position + new Vector3(0, 0, 2));
+
+
+        }
+     
+        
     }
 
     private void isItHopping()
