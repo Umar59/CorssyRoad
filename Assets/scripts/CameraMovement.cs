@@ -16,6 +16,6 @@ public class CameraMovement : MonoBehaviour
     }
     void Update()
     {
-        transform.DOMoveZ(target.position.z, duration, false);
+        transform.DOMove(target.position, duration, false);
     }
 }

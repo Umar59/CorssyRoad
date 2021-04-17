@@ -66,8 +66,10 @@
     <Compile Include="Assets\Assets\VoxelAnimals\Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\scripts\CameraMovement.cs" />
     <Compile Include="Assets\scripts\TerrainData.cs" />
-    <Compile Include="Assets\scripts\playerMovament.cs" />
+    <Compile Include="Assets\scripts\playerMovement.cs" />
+    <Compile Include="Assets\scripts\swipe.cs" />
     <Compile Include="Assets\scripts\terrainSpawner.cs" />
+    <Compile Include="Assets\scripts\timer.cs" />
     <None Include="Assets\Assets\VoxelAnimals\Documentation\ReadMe.txt" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>F:/Crossy road/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
@@ -269,6 +271,12 @@
     </Reference>
     <Reference Include="DOTween">
       <HintPath>F:/Crossy road/Assets/Plugins/Demigiant/DOTween/DOTween.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
+      <HintPath>E:/Unity Projects/2019.3.5f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Common">
+      <HintPath>E:/Unity Projects/2019.3.5f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Common.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>E:/Unity Projects/2019.3.5f1/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>
