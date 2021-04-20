@@ -9,17 +9,20 @@ public class terrainSpawner : MonoBehaviour
     [SerializeField] private int maxChunks;
     [SerializeField] private List<TerrainData> terrainDatas = new List<TerrainData>();
     [SerializeField] private Transform terrainHolder;
+    ObjectPooler _objectPooler;
 
     private Vector3 currentPosition = new Vector3(0f, 0f, 0f);
     private List<GameObject> currentTerrain = new List<GameObject>();
 
     void Start()
     {
+        _objectPooler = ObjectPooler.Instance;
         for (int i = 0; i < maxChunks; i++)
         {
             TerrainSpawn(true);
         }
         maxChunks = currentTerrain.Count;
+        
     }
 
     // Update is called once per frame
@@ -35,7 +38,8 @@ public class terrainSpawner : MonoBehaviour
 
     private void TerrainSpawn(bool isStart)
     {
-
+      // _objectPooler.SpawnFromPool("road", currentPosition, Quaternion.identity);
+        
         int whichTerrainToSpawn = Random.Range(0, terrainDatas.Count);
         int terrainMaxInRow = Random.Range(1, terrainDatas[whichTerrainToSpawn].maxChunksAtTime);
         for (int i = 0; i < terrainMaxInRow; i++)

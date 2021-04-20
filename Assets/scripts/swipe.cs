@@ -10,41 +10,42 @@ public class swipe : MonoBehaviour
 
     private Vector2 startTouch, swipeDelta;
 
-    private Vector2 SwipeDelta
-    {
-        get { return swipeDelta; }
-    }
+    #region Getters
 
-    public bool swipeLeft
-    {
-        get { return SwipeLeft; }
-    }
-
-    public bool swipeRight
-    {
-        get { return SwipeRight; }
-    }
-
-    public bool swipeDown
-    {
-        get { return SwipeDown; }
-    }
-
-    public bool swipeUp
-    {
-        get { return SwipeUp; }
-    }
-
-    public bool isHolding
-    {
-        get { return IsHolding; }
-    }
-
-    public bool Tap
-    {
-        get { return tap; }
-    }
-
+        public bool swipeLeft
+        {
+            get { return SwipeLeft; }
+        }
+    
+        public bool swipeRight
+        {
+            get { return SwipeRight; }
+        }
+    
+        public bool swipeDown
+        {
+            get { return SwipeDown; }
+        }
+    
+        public bool swipeUp
+        {
+            get { return SwipeUp; }
+        }
+    
+        public bool isHolding
+        {
+            get { return IsHolding; }
+        }
+    
+        public bool Tap
+        {
+            get { return tap; }
+        }
+        private Vector2 SwipeDelta
+        {
+            get { return swipeDelta; }
+        }
+    #endregion
 
     private void Update()
     {
