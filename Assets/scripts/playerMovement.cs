@@ -56,19 +56,24 @@ public class playerMovement : MonoBehaviour
             }
             else if (swipes.swipeUp && !isHopping)
             {
-                Move((transform.position.z + 2), new Vector3(0, 0, 0), true);
+                float xDifference = 0;
+                if (transform.position.x %1 != 0)
+                {
+                    xDifference = Mathf.Round(transform.position.x) - transform.position.x;
+                }
+                Move(new Vector3(xDifference,  0, 2), new Vector3(0, 0, 0));
             }
             else if (swipes.swipeDown && !isHopping)
             {
-                Move((transform.position.z - 2), new Vector3(0, 180, 0), true);
+                Move(new Vector3(0,  0,  -2), new Vector3(0, 180, 0));
             }
             else if (swipes.swipeLeft && !isHopping)
             {
-                Move((transform.position.x - 2), new Vector3(0, -90, 0), false);
+                Move(new Vector3(- 2, 0, 0), new Vector3(0, -90, 0));
             }
             else if (swipes.swipeRight && !isHopping)
             {
-                Move((transform.position.x + 2), new Vector3(0, 90, 0), false);
+                Move(new Vector3( 2, 0, 0), new Vector3(0, 90, 0));
             }
             else if (!swipes.isHolding && !isHopping)
             {
@@ -79,15 +84,14 @@ public class playerMovement : MonoBehaviour
         Debug.DrawLine(transform.position, direction2);
 
     }
-    private void Move(float direction, Vector3 rotation, bool isZaxis)
+    private void Move(Vector3 direction, Vector3 rotation)
     {
             isHopping = true;
             animator.SetTrigger("hop");
-            Debug.Log("hui");
+            
             transform.DOScale(new Vector3(1f, 1f, 1f), 0.15f);
             transform.DORotate(rotation, 0.15f, RotateMode.Fast);
-            if (isZaxis) transform.DOMoveZ( direction, 0.15f, false);
-            else  transform.DOMoveX(direction, 0.15f, false);
+            transform.DOMove( transform.position + direction, 0.15f, false);
             
             canJump = Time.time + timeBeforeNextJump;
     }
