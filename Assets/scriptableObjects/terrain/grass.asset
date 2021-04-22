@@ -12,5 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a9fddbb3cf3fdf4c9ec875994290584, type: 3}
   m_Name: grass
   m_EditorClassIdentifier: 
-  terrain: {fileID: 1079000166984735435, guid: 9ba5fcfd0139a364bbb3ac1b6ba9235f, type: 3}
+  possibleTerrain:
+  - {fileID: 2068497227448486801, guid: bc55c76fe99ab9545b815329a0f789e4, type: 3}
+  - {fileID: 300474770299145898, guid: b8f1dbca154571b44a0def58a1836dee, type: 3}
+  - {fileID: 2133059371192146889, guid: 6de07002524c9904b9508e33ba02dd61, type: 3}
   maxChunksAtTime: 5

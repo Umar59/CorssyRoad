@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a9fddbb3cf3fdf4c9ec875994290584, type: 3}
   m_Name: road
   m_EditorClassIdentifier: 
-  terrain: {fileID: 1406606841618604179, guid: d7821a8e5320b5845b7213b1198d7125, type: 3}
+  possibleTerrain:
+  - {fileID: 1406606841618604179, guid: d7821a8e5320b5845b7213b1198d7125, type: 3}
   maxChunksAtTime: 4

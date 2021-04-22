@@ -6,6 +6,11 @@ TagManager:
   tags:
   - Environment
   - Hop
+  - Obstacle
+  - Coin
+  - Car
+  - Water
+  - Money
   layers:
   - Default
   - TransparentFX
