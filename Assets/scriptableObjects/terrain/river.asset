@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a9fddbb3cf3fdf4c9ec875994290584, type: 3}
   m_Name: river
   m_EditorClassIdentifier: 
-  terrain: {fileID: 8248518961460172436, guid: 3a618bb2e6cbdb441aa273dd41aeb85b, type: 3}
+  possibleTerrain:
+  - {fileID: 8248518961460172436, guid: 3a618bb2e6cbdb441aa273dd41aeb85b, type: 3}
   maxChunksAtTime: 3

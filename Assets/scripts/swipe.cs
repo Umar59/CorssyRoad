@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Dynamic;
 using UnityEngine;
 
-public class swipe : MonoBehaviour
+public class Swipe : MonoBehaviour
 {
     private bool SwipeLeft, SwipeRight, SwipeUp, SwipeDown, tap;
     private bool isDragging, IsHolding = false;

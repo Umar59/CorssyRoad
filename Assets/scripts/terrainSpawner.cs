@@ -1,66 +1,82 @@
-﻿using JetBrains.Annotations;
+﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
-public class terrainSpawner : MonoBehaviour
+public class TerrainSpawner : MonoBehaviour
 {
+    public int minZ = 2;
+    public int lineAhead = 40;
+    public int lineBehind = 20;
 
-    [SerializeField] private int maxChunks;
-    [SerializeField] private List<TerrainData> terrainDatas = new List<TerrainData>();
-    [SerializeField] private Transform terrainHolder;
-    ObjectPooler _objectPooler;
+    public GameObject[] linePrefabs;
+    public GameObject coins;
+    public Transform terrainHolder;
+    private Dictionary<int, GameObject> lines;
 
-    private Vector3 currentPosition = new Vector3(0f, 0f, 0f);
-    private List<GameObject> currentTerrain = new List<GameObject>();
+    private GameObject player;
 
-    void Start()
+    public void Start()
     {
-        _objectPooler = ObjectPooler.Instance;
-        for (int i = 0; i < maxChunks; i++)
-        {
-            TerrainSpawn(true);
-        }
-        maxChunks = currentTerrain.Count;
+        player = GameObject.FindGameObjectWithTag("Player");
+        lines = new Dictionary<int, GameObject>();
         
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.W))
+        var playerZ = (int) player.transform.position.z;
+
+        for (var z = Mathf.Max(minZ, playerZ - lineBehind); z <= playerZ + lineAhead; z +=1)
         {
-            TerrainSpawn(false);
-
-        }
-
-    }
-
-    private void TerrainSpawn(bool isStart)
-    {
-      // _objectPooler.SpawnFromPool("road", currentPosition, Quaternion.identity);
-        
-        int whichTerrainToSpawn = Random.Range(0, terrainDatas.Count);
-        int terrainMaxInRow = Random.Range(1, terrainDatas[whichTerrainToSpawn].maxChunksAtTime);
-        for (int i = 0; i < terrainMaxInRow; i++)
-        {
-            GameObject terrains = Instantiate(terrainDatas[whichTerrainToSpawn].terrain, currentPosition, Quaternion.identity, terrainHolder);
-
-            currentTerrain.Add(terrains);
-            if (!isStart)
+            if (!lines.ContainsKey(z))
             {
-                if (currentTerrain.Count > maxChunks)
+                var line = (GameObject) Instantiate(
+                    linePrefabs[Random.Range(0, linePrefabs.Length)],
+                    new Vector3(0, 0, z),
+                    Quaternion.Euler(0, 0, 0),
+                    terrainHolder
+                   
+                );
+                    Debug.Log("terrain");
+                lines.Add(z, line);
+                
+                GameObject coin;
+                int x = Random.Range(0, 2);
+                if (x == 1)
                 {
-
-                    Destroy(currentTerrain[0]);
-                    currentTerrain.RemoveAt(0);
+                    coin = (GameObject) Instantiate(coins, lines[z].transform, true);
+                    int randX = Random.Range(-5, 5);
+                    coin.transform.position = new Vector3(randX, 0f, z);
+                    Debug.Log("coin");
                 }
+
+
+                
+            }
+        }
+
+        // Remove lines based on player position.
+        foreach (var line in new List<GameObject>(lines.Values))
+        {
+            var lineZ = line.transform.position.z;
+            if (lineZ < playerZ - lineBehind)
+            {
+                lines.Remove((int) lineZ);
+                Destroy(line);
+            }
+        }
+    }
+
+    public void Reset()
+    {
+        if (lines != null)
+        {
+            foreach (var line in new List<GameObject>(lines.Values))
+            {
+                Destroy(line);
             }
 
-            currentPosition.z += 2;
-
-
+            Start();
         }
-
     }
 }
