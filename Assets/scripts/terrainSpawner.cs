@@ -37,7 +37,6 @@ public class TerrainSpawner : MonoBehaviour
                     terrainHolder
                    
                 );
-                    Debug.Log("terrain");
                 lines.Add(z, line);
                 
                 GameObject coin;
@@ -47,7 +46,6 @@ public class TerrainSpawner : MonoBehaviour
                     coin = (GameObject) Instantiate(coins, lines[z].transform, true);
                     int randX = Random.Range(-5, 5);
                     coin.transform.position = new Vector3(randX, 0f, z);
-                    Debug.Log("coin");
                 }
 
 

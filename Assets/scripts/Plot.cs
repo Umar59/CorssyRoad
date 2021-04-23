@@ -7,24 +7,20 @@ using UnityEngine;
 public class Plot : MonoBehaviour
 {
 
-  //  [SerializeField] private ParticleSystem splashes;
+    [SerializeField] private ParticleSystem splashes;
 
-    private AudioSource plotSound;
-
-    private void Start()
-    {
-        plotSound = GetComponent<AudioSource>();
-    }
+   // [SerializeField]private AudioSource plotSound;
+    
 
     private void OnCollisionEnter(Collision other)
     {
         var gameObject = other.gameObject;
         if (gameObject.CompareTag("Player"))
         {
-           // splashes.Play();
+            splashes.Play();
             transform.DOPunchScale(new Vector3(0.2f, 0.2f, 0.2f), 0.2f, 1, 1);
-             gameObject.transform.parent = transform;
-            //plotSound.Play();
+            gameObject.transform.parent = transform;
+          //  plotSound.Play();
 
 
         }
@@ -35,10 +31,9 @@ public class Plot : MonoBehaviour
         var gameObject = other.gameObject;
         if (gameObject.CompareTag("Player"))
         {
-         //   splashes.Play();
+            splashes.Play();
             transform.DOPunchScale(new Vector3(0.2f, 0.2f, 0.2f), 0.2f, 1, 1);
             gameObject.transform.parent = null;
-            gameObject.transform.localScale = new Vector3(7, 7, 5.8f);
         }
     }
 }
