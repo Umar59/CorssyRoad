@@ -11,6 +11,7 @@ TagManager:
   - Car
   - Water
   - Money
+  - StartUI
   layers:
   - Default
   - TransparentFX

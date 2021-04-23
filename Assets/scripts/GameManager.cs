@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,7 +15,9 @@ public class GameManager : MonoBehaviour
     public int balance;
 
     public static bool GameState = true;
-
+    
+    public Text scoreUI;
+    public Text coinsCount;
     private void Start()
     {
         playerMovement.onAddMoney += AddMoney;
@@ -28,24 +31,28 @@ public class GameManager : MonoBehaviour
     {
         PlayerPrefs.SetInt("Record", record);
         PlayerPrefs.SetInt("Balance", balance);
+        coinsCount.text = balance.ToString();
     }
 
     public void GetData()
     {
         record = PlayerPrefs.GetInt("Record");
         balance = PlayerPrefs.GetInt("Balance");
+        coinsCount.text = balance.ToString();
     }
 
     private void AddMoney(int money)
     {
         balance += money;
         SetData();
+
     }
 
     private void AddScore(int score)
     {
-        this.score = score;
+        this.score = ++score;
         UpdateRecord();
+        scoreUI.text = score.ToString();
     }
 
     private void UpdateRecord()
@@ -59,6 +66,7 @@ public class GameManager : MonoBehaviour
     private void GameOver()
     {
         GameState = false;
+
         SetData();
     }
 

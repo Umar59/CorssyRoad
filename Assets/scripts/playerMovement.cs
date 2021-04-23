@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 direction2;
   //  public TerrainSpawner _terrainSpawner;
     private AudioSource playerSound;
+    public GameObject crossyRoad;
     
     public int lefLimit = -4;
     public int rightLimit = 4;
@@ -30,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
     public delegate void GameOver();
     public event GameOver gameOver;
 
-
+    public GameManager gameManager;
     [SerializeField]
     private AudioClip jumpSound;
     [SerializeField]
@@ -45,36 +47,41 @@ public class PlayerMovement : MonoBehaviour
     {
         playerSound = GetComponent<AudioSource>();
         animator = GetComponent<Animator>();
+        crossyRoad = GameObject.FindGameObjectWithTag("StartUI");
     }
 
     // Update is called once per frame
     void Update()
     {
-       
-        
+
         #region Standalone inputs
 
-         Debug.Log(swipes.isHolding);
-                if (Input.GetKeyDown(KeyCode.Space) && !isHopping && Time.time > canJump)
+                if (Input.GetKeyDown(KeyCode.Space) && !isHopping && Time.time > canJump && GameManager.GameState)
                 {
         
                     transform.DOScale(new Vector3(1.18f, 0.7f, 1f), 0.1f);
+                    if (crossyRoad.gameObject.activeSelf)
+                    {
+                        crossyRoad.transform.DOMoveX(-1000, 1);
+
+                    }
                 }
         
-                if (Input.GetKeyUp(KeyCode.Space) && Time.time > canJump)
+                if (Input.GetKeyUp(KeyCode.Space) && Time.time > canJump && GameManager.GameState)
                 {
                    float xDifference = 0;
                    if (transform.position.x %1 != 0)
                    {
                        xDifference = Mathf.Round(transform.position.x) - transform.position.x;
                    }
+                
                    Move(new Vector3(xDifference,  0, 1), new Vector3(0, 0, 0));
                 }
 
         #endregion
         
 
-        if (Time.time > canJump)
+        if (Time.time > canJump && GameManager.GameState)
         {
             if (swipes.isHolding && !isHopping)
             {
@@ -84,10 +91,10 @@ public class PlayerMovement : MonoBehaviour
             {
                 float xDifference = 0;
                 if (transform.position.x %1 != 0)
-                {
+                {       //2       -                2.3
                     xDifference = Mathf.Round(transform.position.x) - transform.position.x;
                 }
-                Move(new Vector3(xDifference,  0, 1), new Vector3(0, 0, 0));
+                Move(new Vector3(xDifference,  0, 1 ), new Vector3(0, 0, 0));
             }
             else if (swipes.swipeDown && !isHopping)
             {
@@ -101,13 +108,13 @@ public class PlayerMovement : MonoBehaviour
             {
                 Move(new Vector3( 1, 0, 0), new Vector3(0, 90, 0));
             }
-            else if (!swipes.isHolding && !isHopping)
+            else if (!swipes.isHolding && !isHopping && GameManager.GameState)
             {
                 transform.DOScale(new Vector3(1f, 1f, 1f), 0.1f);
             }
         }
 
-        Debug.DrawLine(transform.position, direction2);
+      
 
     }
     private void Move(Vector3 direction, Vector3 rotation)
@@ -136,6 +143,7 @@ public class PlayerMovement : MonoBehaviour
         transform.DOScale(new Vector3(1f, 1f, 1f), 0.15f);
         transform.DORotate(rotation, 0.15f, RotateMode.Fast);
         transform.DOMove( transform.position + direction, 0.15f, false);
+        transform.DOMoveZ(Mathf.Round(transform.position.z), 0.01f);
         //_terrainSpawner.TerrainSpawn(false, transform.position);
         canJump = Time.time + timeBeforeNextJump;
         onAddScore.Invoke((int)nextPosition.z);
@@ -145,17 +153,20 @@ public class PlayerMovement : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Coin"))
         {
-            Debug.Log("coin");
             other.gameObject.SetActive(false);
             onAddMoney.Invoke(1);
             playerSound.PlayOneShot(moneySound);
         }
         if (other.gameObject.CompareTag("Car"))
         {
-            Debug.Log("Hui");
-            gameOver.Invoke();
-            transform.DOScaleY(0.5f, 0f);
-            playerSound.PlayOneShot(carDeathSound);
+            if (GameManager.GameState)
+            {
+                 gameOver.Invoke();
+                 transform.DOScaleY(0.2f, 0.1f);
+                 playerSound.PlayOneShot(carDeathSound);
+                 Debug.Log("car");
+            }
+           
         }
     }
     
